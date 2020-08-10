@@ -12,7 +12,7 @@ class Controller extends BaseController
     public function test(Request $request) {
         $domain = $request->input('domain');
 
-        $db_domain = Test::where('domain', $domain)->get();
+        $db_domain = Test::where('domain', $domain)->get()->toArray();
 
         if (empty($db_domain)) {
             DB::beginTransaction();
