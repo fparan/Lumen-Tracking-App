@@ -26,19 +26,6 @@ class Controller extends BaseController
             } catch (\Exception $e) {
                 DB::rollBack();
             }
-        } else {
-            DB::beginTransaction();
-
-            try {
-                $domain = Test::find($db_domain['id']);
-                $domain->touch();
-
-                DB::commit();
-            } catch (\Exception $e) {
-                print_r($e->getMessage());
-                exit;
-                DB::rollBack();
-            }
         }
     }
 }
