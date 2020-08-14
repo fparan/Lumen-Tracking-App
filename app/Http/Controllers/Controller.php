@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use App\Test;
+use Carbon\Carbon;
 
 class Controller extends BaseController
 {
@@ -21,6 +22,18 @@ class Controller extends BaseController
                 $db_domain = new Test();
                 $db_domain->domain = $domain;
                 $db_domain->save();
+
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollBack();
+            }
+        } else {
+            DB::beginTransaction();
+
+            try {
+                $update = Test::find($db_domain['id']);
+                $update->updated_at = Carbon::now()->toDateTimeString();
+                $update->save();
 
                 DB::commit();
             } catch (\Exception $e) {
