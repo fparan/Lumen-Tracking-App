@@ -31,9 +31,8 @@ class Controller extends BaseController
             DB::beginTransaction();
 
             try {
-                $update = Test::find($db_domain['id']);
-                $update->updated_at = Carbon::now()->toDateTimeString();
-                $update->save();
+                $domain = Test::find($db_domain['id']);
+                $domain->touch();
 
                 DB::commit();
             } catch (\Exception $e) {
