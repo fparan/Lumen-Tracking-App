@@ -13,6 +13,9 @@ class Controller extends BaseController
     public function test(Request $request) {
         $domain = $request->input('domain');
 
+        print_r($domain);
+        exit;
+
         $db_domain = Test::where('domain', $domain)->get()->toArray();
 
         if (empty($db_domain)) {
