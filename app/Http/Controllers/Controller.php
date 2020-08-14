@@ -30,7 +30,9 @@ class Controller extends BaseController
             DB::beginTransaction();
 
             try {
-                Test::where('domain', $domain)->update('count', (int)$db_domain['count'] + 1);
+                $domain = Test::find($domain['id']);
+                $domain->count = (int)$db_domain['count'] + 1;
+                $domain->save();
 
                 DB::commit();
             } catch (\Exception $e) {
